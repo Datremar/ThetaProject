@@ -3,6 +3,9 @@
 *.aar
 *.ap_
 *.aab
+*.db
+__pycache__
+
 
 # Files for the ART/Dalvik VM
 *.dex

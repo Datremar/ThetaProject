@@ -1,12 +1,12 @@
 from json import loads
 
-from backend.api.handlers.controller_data_handler import ControllerDataHandler
-from backend.application import app
-from backend.core.utils.sensor_handlers import Sensors
-from backend.mqtt.client import MQTTClient
+from api.handlers.controller_data_handler import ControllerDataHandler
+from application import app
+from core.utils.sensor_handlers import Sensors
+from mqtt.client import MQTTClient
 
-from backend.api.handlers.device_handler import DeviceHandler
-from backend.core.utils.device_maps import DeviceTypes
+from api.handlers.device_handler import DeviceHandler
+from core.utils.device_maps import DeviceTypes
 
 device_handler = DeviceHandler()
 controller_handler = ControllerDataHandler()

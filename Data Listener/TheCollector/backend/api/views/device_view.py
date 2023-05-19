@@ -5,9 +5,9 @@ from json import loads
 from flask import request
 from flask_restful import Resource
 
-from backend.application import app
-from backend.database.handlers.data_handler import DataHandler
-from backend.database.handlers.device_handler import DeviceHandler
+from application import app
+from database.handlers.data_handler import DataHandler
+from database.handlers.device_handler import DeviceHandler
 
 
 class DeviceView(Resource):

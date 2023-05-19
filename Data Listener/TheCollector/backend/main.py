@@ -1,7 +1,7 @@
 from flask_restful import Api
 
-from backend.api.views.device_view import DeviceView
-from backend.application import app
+from api.views.device_view import DeviceView
+from application import app
 from mqtt.client import MQTTClient
 from mqtt.collector import Collector
 

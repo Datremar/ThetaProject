@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 
-from backend.application import app
-from backend.core.utils.device_maps import DeviceTypes
-from backend.database import engine
-from backend.database.models import DeviceModel, ClimateDataModel, ChargeDataModel, SoilDataModel, ControllerDataModel
+from application import app
+from core.utils.device_maps import DeviceTypes
+from database import engine
+from database.models import DeviceModel, ClimateDataModel, ChargeDataModel, SoilDataModel, ControllerDataModel
 
 
 class DataHandler:

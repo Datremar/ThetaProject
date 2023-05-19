@@ -2,9 +2,8 @@ from flask import Response, request
 
 from frontend.application import app
 from frontend.client.client import Client
-from frontend.plotters.climate_plotter import ClimatePlotter
-from frontend.views.utils.html_device_wrap import HTMLDeviceWrap
-from frontend.views.utils.html_wrap import HTMLWrap
+from frontend.plotters.data_plotter import Plotter
+from frontend.views.utils.html_wrappers import HTMLDeviceWrap, HTMLWrap
 
 client = Client()
 
@@ -25,15 +24,14 @@ def devices_view():
     return response
 
 
-@app.route("/device", methods=["GET"])
-def device_details(device_name: str):
+@app.route("/device", methods=["POST"])
+def device_details():
     response = None
 
-    if request.method == "GET":
-        device_data = client.get_device_data(device_name)
-        print(device_data)
+    if request.method == "POST":
+        device_name = request.form["device_name"]
 
-        plot = ClimatePlotter().plot(device_name=device_name)
+        plot = Plotter().plot(device_name=device_name)
 
         response = Response(plot.html)
 

@@ -1,12 +1,12 @@
 import datetime
-import logging
+
 from json import loads, JSONDecodeError
 
 from sqlalchemy.orm import Session
 
-from backend.application import app
-from backend.database import engine
-from backend.database.models import DeviceModel, SoilDataModel
+from application import app
+from database import engine
+from database.models import DeviceModel, SoilDataModel
 
 
 class SoilDataHandler:
