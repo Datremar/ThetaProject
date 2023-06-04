@@ -37,8 +37,14 @@ class DataPlot:
 
             figure, axis = plt.subplots(1, 2, figsize=(10, 5))
 
-            axis[0].set_title("Temperature")
-            axis[1].set_title("Humidity")
+            axis[0].set_title("Температура")
+            axis[1].set_title("Влажность")
+
+            axis[0].set_xlabel("Время")
+            axis[0].set_ylabel("Температура")
+
+            axis[1].set_xlabel("Время")
+            axis[1].set_ylabel("Влажность%")
 
             axis[0].set_ylim(0, 100)
             axis[1].set_ylim(0, 100)
@@ -61,7 +67,11 @@ class DataPlot:
 
             figure, axis = plt.subplots(1, 1, figsize=(10, 5))
 
-            axis.set_title("Charge")
+            axis.set_title("Заряд")
+
+            axis.set_xlabel("Время")
+            axis.set_ylabel("Заряд%")
+
             axis.set_ylim(0, 100)
             axis.plot(x, y1)
         elif device_type == DeviceTypes.PLANT_WATERING:
@@ -79,7 +89,11 @@ class DataPlot:
 
             figure, axis = plt.subplots(1, 1, figsize=(10, 5))
 
-            axis.set_title("Soil Humidity")
+            axis.set_title("Влажность почвы")
+
+            axis.set_xlabel("Время")
+            axis.set_ylabel("Влажность%")
+
             axis.set_ylim(0, 100)
             axis.plot(x, y1)
 

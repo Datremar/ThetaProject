@@ -1,4 +1,4 @@
-from frontend.views.sensor_view import *
+from views.views import *
 
 
 class Main:
