@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AvailableDevices implements Observer {
     public static AvailableDevices INSTANCE = new AvailableDevices();
@@ -43,24 +44,28 @@ public class AvailableDevices implements Observer {
 
     @Override
     public void update(String topic, String message) {
+        Log.d("____________________DEBUG UPDATE AVAILABLE DEVICES", "Incoming topic: " + topic);
         Log.d("____________________DEBUG UPDATE AVAILABLE DEVICES", "Updating...");
-        if (topic.equals("/device_id")) {
+        if (Objects.equals(topic, "/device_id")) {
             try {
+                jsonObject = new JSONObject(message);
+
                 for (String name: names) {
                     if (name.equals(jsonObject.getString("name"))) {
+                        Log.d("____________________DEBUG UPDATE AVAILABLE DEVICES", "Skipping " + name);
                         return;
                     }
                 }
 
                 Log.d("_____________________________________________________________Available Devices DEBUG", "Adding device " + topic + " with data " + message);
 
-                jsonObject = new JSONObject(message);
-
                 names.add(jsonObject.getString("name"));
                 devices.add(new AvailableDevice(
                             jsonObject.getString("name"),
                             jsonObject.getString("type")
                         ));
+
+                Log.d("____________________DEBUG UPDATE AVAILABLE DEVICESдшывгфапрмзшгфыврмзщшфывомщхшофу", names.toString());
 
                 this.adapter.notifyDataSetChanged();
             } catch (JSONException e) {

@@ -20,11 +20,14 @@ class Lighting:
 
     @property
     def current_state(self):
-        return dumps(
-            {
-                "state": self.state
-            }
-        )
+        state = {}
+
+        if self.state:
+            state["state"] = "on"
+        else:
+            state["state"] = "off"
+
+        return dumps(state)
 
     def make_connect_fallback(self):
         def on_connect(client, userdata, flags, rc):
@@ -32,7 +35,7 @@ class Lighting:
                 print(self.client_id, "Connection established.")
                 self.client.publish(topic="/device_id", message=dumps(self.device_id), qos=1)
                 self.client.subscribe(topic="/node", qos=1)
-                self.client.subscribe(topic=self.client_id, qos=1)
+                self.client.subscribe(topic="/node" + self.client_id, qos=1)
 
                 return
 
@@ -57,11 +60,20 @@ class Lighting:
                     message=self.current_state,
                     qos=1
                 )
-            elif topic == self.client_id:
-                print("!!!!!!!!!!!!!!!!!!!!!!")
+            elif topic == "/node" + self.client_id:
                 mssg = loads(mssg)
-                self.state = True if mssg["state"] == "on" else False if mssg["state"] == "off" else None
+                if mssg["state"] == "on":
+                    self.state = True
+                elif mssg["state"] == "off":
+                    self.state = False
+                else:
+                    print("Unknown command")
                 print(self.state)
+                self.client.publish(
+                    topic=self.client_id,
+                    message=self.current_state,
+                    qos=1
+                )
 
         return handle_mqtt_message
 
@@ -78,8 +90,4 @@ if __name__ == "__main__":
     device = Lighting(client_id="/MockLighting1")
     start, end = time.time(), time.time()
     while 1:
-        end = time.time()
-        if end - start > 10:
-            device.send_data()
-            start = end
         device.run()

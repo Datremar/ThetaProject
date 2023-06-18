@@ -2,6 +2,8 @@ package com.example.iot_smart_home.utils.observer;
 
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Observable {
         this.observers.remove(observer);
     }
 
-    public void notifyObservers(String topic, String message) {
+    public void notifyObservers(String topic, String message) throws JSONException {
         Log.d("MQTT DEBUG", "Notifying observers.");
 
         for (Observer observer: this.observers) {

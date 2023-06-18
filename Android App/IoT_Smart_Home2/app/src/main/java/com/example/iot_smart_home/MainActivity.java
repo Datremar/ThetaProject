@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements DeviceRecyclerVie
 
     private Map<DeviceType, Intent> typeIntentMap = new HashMap<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements DeviceRecyclerVie
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Smart Home");
+        setTitle("Умный Дом");
 
         devices = DeviceList.INSTANCE;
 
@@ -74,9 +73,6 @@ public class MainActivity extends AppCompatActivity implements DeviceRecyclerVie
 
         devices.init(adapter, db, client);
         devices.loadData();
-
-        client.subscribe("/ClimateMonitor1", 1);
-
 
         selectClimate = new Intent(MainActivity.this, ClimateDeviceActivity.class);
         selectPower = new Intent(MainActivity.this, PowerDeviceActivity.class);

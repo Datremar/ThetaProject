@@ -16,11 +16,12 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONException;
 
 public class MQTTClient extends Observable {
     public static MQTTClient INSTANCE = null;
 
-    private static final String broker       = "tcp://192.168.0.21:1883";
+    private static final String broker = "tcp://test.mosquitto.org:1883";
     private final String topic_device_id = "/device_id";
     private final String clientId = "IoTAppClient";
     private final MQTTClient self;
@@ -31,7 +32,6 @@ public class MQTTClient extends Observable {
 
     public static void init(Context context) {
         INSTANCE = new MQTTClient(context);
-
     }
 
     private MQTTClient(Context context) {
@@ -62,13 +62,13 @@ public class MQTTClient extends Observable {
                 } catch (MqttException e) {
                     Log.e("ERROR", "MQTT Client failed to reconnect");
                     e.printStackTrace();
-                    Toast.makeText(context, "Connection lost.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Соединение потеряно", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void messageArrived(String topic, MqttMessage message) {
-                Log.d("MQTT DEBUG", "Incoming message: " + new String(message.getPayload()));
+            public void messageArrived(String topic, MqttMessage message) throws JSONException {
+                Log.d("MQTT DEBUG", "Incoming message: " + topic + " " + new String(message.getPayload()));
                 self.notifyObservers(topic, new String(message.getPayload()));
             }
 
@@ -102,13 +102,13 @@ public class MQTTClient extends Observable {
                 subscribe(topic_device_id, 1);
 
                 Log.d("MQTT DEBUG","Successfully connected.");
-                Toast.makeText(context, "Connection established.", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Соединение установлено", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                 Log.d("MQTT DEBUG","Failed to connect to: " + broker);
-                Toast.makeText(context, "Connection to broker failed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Не удалось подключиться к брокеру", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -138,18 +138,18 @@ public class MQTTClient extends Observable {
                 }
             });
 
-            Toast.makeText(context, "Subscribed to topic: " + topic, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Осуществлена подписка на тему: " + topic, Toast.LENGTH_LONG).show();
         }
     }
 
     public void unsubscribe(String topic) {
         this.client.unsubscribe(topic);
-        Toast.makeText(context, "Unsubscribed from topic: " + topic, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Отменена подписка на тему: " + topic, Toast.LENGTH_LONG).show();
     }
 
     public void publish(String topic, String message){
         if (!this.client.isConnected()) {
-            Toast.makeText(context, "No connection to broker.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Отсутствует соединение с брокером", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -162,7 +162,7 @@ public class MQTTClient extends Observable {
 
         if(!this.client.isConnected()){
             Log.d("MQTT DEBUG",this.client.getBufferedMessageCount() + " messages in buffer.");
-            Toast.makeText(context, "Failed to publish on topic: " + topic, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Не удалось опубликовать сообщение на тему: " + topic, Toast.LENGTH_LONG).show();
         }
     }
 

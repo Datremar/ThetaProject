@@ -40,10 +40,10 @@ class DataPlot:
             axis[0].set_title("Температура")
             axis[1].set_title("Влажность")
 
-            axis[0].set_xlabel("Время")
+            axis[0].set_xlabel("Время сек.")
             axis[0].set_ylabel("Температура")
 
-            axis[1].set_xlabel("Время")
+            axis[1].set_xlabel("Время сек.")
             axis[1].set_ylabel("Влажность%")
 
             axis[0].set_ylim(0, 100)
@@ -69,7 +69,7 @@ class DataPlot:
 
             axis.set_title("Заряд")
 
-            axis.set_xlabel("Время")
+            axis.set_xlabel("Время сек.")
             axis.set_ylabel("Заряд%")
 
             axis.set_ylim(0, 100)
@@ -91,7 +91,7 @@ class DataPlot:
 
             axis.set_title("Влажность почвы")
 
-            axis.set_xlabel("Время")
+            axis.set_xlabel("Время сек.")
             axis.set_ylabel("Влажность%")
 
             axis.set_ylim(0, 100)

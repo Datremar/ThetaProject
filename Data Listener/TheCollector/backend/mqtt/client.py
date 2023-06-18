@@ -38,7 +38,7 @@ class MQTTClient:
         try:
             self.client.connect(
                 host="test.mosquitto.org",
-                port=1883
+                port=8883
             )
         except ConnectionRefusedError:
             print("Connection failed.")

@@ -9,6 +9,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iot_smart_home.R;
+import com.example.iot_smart_home.activities.utils.Updatable;
 import com.example.iot_smart_home.utils.device.Device;
 import com.example.iot_smart_home.utils.device.DeviceList;
 import com.example.iot_smart_home.utils.mqtt.MQTTClient;
@@ -20,7 +21,7 @@ import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LEDDeviceActivity extends AppCompatActivity {
+public class LEDDeviceActivity extends AppCompatActivity implements Updatable {
     MQTTClient client = MQTTClient.INSTANCE;
     DeviceList devices = DeviceList.INSTANCE;
 
@@ -42,6 +43,7 @@ public class LEDDeviceActivity extends AppCompatActivity {
 
         intent = getIntent();
         device = devices.get(intent.getStringExtra("device_name"));
+        device.setUpdateStateCallback(this::updateState);
 
         json = new JSONObject();
 
@@ -95,4 +97,9 @@ public class LEDDeviceActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void requestState() {}
+
+    @Override
+    public void updateState() throws JSONException {}
 }
